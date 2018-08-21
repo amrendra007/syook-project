@@ -1,4 +1,4 @@
-const encryptedStringGen = require('./encryptedStrGen');
+const encryptedStringGen = require('./helper/encryptedStrGen');
 
 
 encryptedStringGen()
