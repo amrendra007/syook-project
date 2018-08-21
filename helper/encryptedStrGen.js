@@ -18,7 +18,10 @@ module.exports = function () {
                     const raw = util.encryptor(JSON.stringify(obj));
                     encrArray.push(raw);
                     if (encrArray.length === 10) {
-                        resolve(encrArray.join('|'));
+                        // clearing global Array
+                        const copyArray = [...encrArray];
+                        encrArray.length = 0;
+                        resolve(copyArray.join('|'));
                     }
                 })
                 .catch((err) => {
