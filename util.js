@@ -1,7 +1,8 @@
 const crypto = require('crypto');
+require('dotenv').config();
 
-const algorithm = 'aes-256-ctr';
-const password = 'd6F3Efeq';
+const algorithm = process.env.ALGO;
+const password = process.env.PSWD;
 
 const names = ['Jack', 'Mack', 'wack', 'Rocky', 'Tuckker', 'Bang', 'sack', 'zeem', 'jhdfkjd', 'cddd'];
 const origins = ['New york', 'delhi', 'mumbai', 'chennai', 'New boston', 'LA', 'Ca', 'Sa', 'ma', 'gtsy'];
