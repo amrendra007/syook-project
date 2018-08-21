@@ -1,19 +1,23 @@
 const bcrypt = require('bcrypt');
+const util = require('./util');
 
 const saltRounds = 10;
+const encrArray = [];
 
-const obj = {
-    name: 'Ravizeem',
-    origin: 'Delhi',
-    destination: 'Mumbai',
-};
+for (let i = 0; i < 10; i += 1) {
+    const obj = util.objCreator();
+    const stringifiedObj = JSON.stringify(obj);
 
-bcrypt.hash(`name:${obj.name}${obj.origin}${obj.destination}`, saltRounds)
-    .then((hash) => {
-        // console.log(hash);
-        obj.secret_key = hash;
-        console.log(obj);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+    bcrypt.hash(stringifiedObj, saltRounds)
+        .then((hash) => {
+            obj.secret_key = hash;
+            const raw = util.encryptor(stringifiedObj);
+            encrArray.push(raw);
+            console.log(encrArray);
+        }).then(() => {
+            console.log('done');
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
