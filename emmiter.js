@@ -1,33 +1,16 @@
-const net = require('net');
-
+const socket = require('socket.io-client')('http://localhost:3000');
 const encryptedStrGen = require('./helper/encryptedStrGen');
 
-const server = net.createServer((socket) => {
-    console.log('client connected');
-    socket.setEncoding('utf8');
+socket.on('connect', () => {
+    console.log('connected to server');
 
-    // socket.on('data', (chunk) => {
-    //     // socket.write(chunk,'utf8');
-    //     console.log(chunk);
-    // });
-
-    // socket.on('end', () => {
-    //     console.log('disconnected');
-    // });
-
-    function ping() {
+    setInterval(() => {
         encryptedStrGen()
             .then((finalString) => {
-                // console.log(finalString);
-                socket.write(finalString, 'utf8');
+                socket.emit('data', finalString);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }
-    setInterval(ping, 1000);
-});
-
-server.listen(5000, () => {
-    console.log('server started');
+    }, 1000);
 });
