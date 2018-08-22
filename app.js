@@ -5,12 +5,14 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+const dataIntegrityChecker = require('./helper/dataIntegrityChecker');
 
 io.on('connection', (socket) => {
     console.log('client connected');
 
     socket.on('data', (encryptedStr) => {
-        console.log(encryptedStr);
+        dataIntegrityChecker(encryptedStr.split('|'));
+        // console.log(encryptedStr);
     });
 
     socket.on('disconnect', () => {
