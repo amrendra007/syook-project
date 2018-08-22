@@ -4,13 +4,13 @@ const encryptedStrGen = require('./helper/encryptedStrGen');
 socket.on('connect', () => {
     console.log('connected to server');
 
-    setInterval(() => {
-        encryptedStrGen()
-            .then((finalString) => {
-                socket.emit('data', finalString);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, 1000);
+    // setInterval(() => {
+    encryptedStrGen()
+        .then((finalString) => {
+            socket.emit('data', finalString);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    // }, 1000);
 });

@@ -12,7 +12,7 @@ module.exports = function () {
             // Hashing to add secret_key
             bcrypt.hash(JSON.stringify(obj), saltRounds)
                 .then((hash) => {
-                    obj.secret_key = hash;
+                    obj.secretKey = hash;
 
                     // Encrypting whole stringified obj
                     const raw = util.encryptor(JSON.stringify(obj));
