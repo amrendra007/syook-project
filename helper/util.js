@@ -19,6 +19,7 @@ module.exports.objCreator = function() {
     };
 };
 
+//! add error handling here
 // Encrypting string
 module.exports.encryptor = function(text) {
     const iv = Crypto.randomBytes(16);
@@ -26,4 +27,24 @@ module.exports.encryptor = function(text) {
     const encrypted = cipher.update(text);
     const finalBuffer = Buffer.concat([encrypted, cipher.final()]);
     return `${iv.toString('hex')}:${finalBuffer.toString('hex')}`;
+};
+
+module.exports.decryptor = function (encryptedHex) {
+    const encryptedArray = encryptedHex.split(':');
+    const iv = Buffer.from(encryptedArray[0], 'hex');
+    const encrypted = Buffer.from(encryptedArray[1], 'hex');
+    const decipher = Crypto.createDecipheriv(process.env.ALGO, Buffer.from(process.env.PSWD), iv);
+    const decrypted = decipher.update(encrypted);
+    const clearText = Buffer.concat([decrypted, decipher.final()]).toString();
+    return clearText;
+};
+
+module.exports.parseJsonSafely = function (stringData) {
+    let parsedJson;
+    try {
+        parsedJson = JSON.parse(stringData);
+    } catch (err) {
+        console.log(err);
+    }
+    return parsedJson;
 };
