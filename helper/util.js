@@ -22,23 +22,36 @@ module.exports.objCreator = function () {
 //! add error handling here
 // Encrypting string
 module.exports.encryptor = function (text) {
-    const iv = Crypto.randomBytes(16);
-    const cipher = Crypto.createCipheriv(process.env.ALGO, Buffer.from(process.env.PSWD), iv);
-    const encrypted = cipher.update(text);
-    const finalBuffer = Buffer.concat([encrypted, cipher.final()]);
-    return `${iv.toString('hex')}:${finalBuffer.toString('hex')}`;
+    try {
+        const iv = Crypto.randomBytes(16);
+        const cipher = Crypto.createCipheriv(process.env.ALGO, Buffer.from(process.env.PSWD), iv);
+        const encrypted = cipher.update(text);
+        const finalBuffer = Buffer.concat([encrypted, cipher.final()]);
+        return `${iv.toString('hex')}:${finalBuffer.toString('hex')}`;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 };
 
+// Decrypting string
 module.exports.decryptor = function (encryptedHex) {
-    const encryptedArray = encryptedHex.split(':');
-    const iv = Buffer.from(encryptedArray[0], 'hex');
-    const encrypted = Buffer.from(encryptedArray[1], 'hex');
-    const decipher = Crypto.createDecipheriv(process.env.ALGO, Buffer.from(process.env.PSWD), iv);
-    const decrypted = decipher.update(encrypted);
-    const clearText = Buffer.concat([decrypted, decipher.final()]).toString();
-    return clearText;
+    try {
+        const encryptedArray = encryptedHex.split(':');
+        const iv = Buffer.from(encryptedArray[0], 'hex');
+        const encrypted = Buffer.from(encryptedArray[1], 'hex');
+        const decipher = Crypto.createDecipheriv(process.env.ALGO,
+            Buffer.from(process.env.PSWD), iv);
+        const decrypted = decipher.update(encrypted);
+        const clearText = Buffer.concat([decrypted, decipher.final()]).toString();
+        return clearText;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 };
 
+// safe json parser function
 module.exports.parseJsonSafely = function (stringData) {
     let parsedJson;
     try {
