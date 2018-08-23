@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/main.css">
+    <title>view</title>
+</head>
+
+<body>
+    <h1>Data view</h1>
+    <% personData.forEach(function(person) { %>
+        <table>
+            <tr>
+                <td>
+                    <p>Name: </p>
+                </td>
+                <td>
+                    <p>
+                        <%= person.name%>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Time: </p>
+                </td>
+                <td>
+                    <p>
+                        <%= person.time %>
+                    </p>
+                </td>
+            </tr>
+            <tr class="sub-header">
+                <td>Name</td>
+                <td>Origin</td>
+                <td>Destination</td>
+                <td>Timestamp</td>
+            </tr>
+
+            <% person.stream.forEach(function(item) { %>
+                <tr>
+                    <td>
+                        <%= item.name %>
+                    </td>
+                    <td>
+                        <%= item.origin %>
+                    </td>
+                    <td>
+                        <%= item.destination %>
+                    </td>
+                    <td>
+                        <%= item.timestamp %>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+        <% }) %>
+</body>
+
+</html>

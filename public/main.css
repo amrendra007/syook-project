@@ -1,0 +1,21 @@
+h1{
+    text-align: center;
+}
+body {
+    width: 50%;
+    margin: auto;
+}
+table {
+    border: 1px solid grey;
+    width: 100%;
+    padding: 10px;
+}
+
+p {
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.sub-header {
+    font-weight: bold;
+}
