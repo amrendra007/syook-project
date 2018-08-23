@@ -1,13 +1,23 @@
 const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
-const moment = require('moment');
 const mongoose = require('mongoose');
+const moment = require('moment');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+
+// requiring files
 const dataIntegrityChecker = require('./helper/dataIntegrityChecker');
+const Person = require('./models/person');
+const personRoutes = require('./routes/main');
+
+// app configuration
+app.use(express.static(path.join(__dirname, '/public')));
+app.set('view engine', 'ejs');
+app.use('/', personRoutes);
 
 // Database conn
 mongoose.connect(`${process.env.CONN_STRING}`, { useNewUrlParser: true })
@@ -22,9 +32,21 @@ io.on('connection', (socket) => {
     console.log('client connected');
 
     socket.on('data', (encryptedStr) => {
+        console.log(encryptedStr);
         dataIntegrityChecker(encryptedStr.split('|'))
             .then((data) => {
-                console.log(data);
+                data.map(async (item) => {
+                    const momentIns = moment();
+                    const updatedDoc = await Person.findOneAndUpdate({
+                        $and: [
+                            { name: item.name },
+                            { time: momentIns.second(0).format() },
+                        ],
+                    },
+                    { $push: { stream: item } },
+                    { upsert: true, new: true }).exec();
+                    console.log(updatedDoc);
+                });
             });
     });
 
