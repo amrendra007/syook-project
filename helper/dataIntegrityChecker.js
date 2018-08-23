@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 const util = require('./util');
 
-module.exports = function(arrayOfEncrStr) {
+module.exports = function (arrayOfEncrStr) {
     // console.log(arrayOfEncrStr);
     const array = [];
     const lengthOfEncArray = arrayOfEncrStr.length;
@@ -15,6 +16,7 @@ module.exports = function(arrayOfEncrStr) {
             bcrypt.compare(JSON.stringify(originalObj), secretKey)
                 .then((res) => {
                     if (res === true) {
+                        originalObj.timestamp = moment().format();
                         array.push(originalObj);
                     }
                     if (lengthOfEncArray === index + 1) {
