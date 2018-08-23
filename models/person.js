@@ -6,10 +6,10 @@ const PersonSchema = new mongoose.Schema({
         trim: true,
     },
     time: {
-        type: Date,
-        default: Date.now,
+        type: String,
     },
     stream: [],
 });
+
 
 module.exports = mongoose.model('Person', PersonSchema);
