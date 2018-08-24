@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/main.css">
+    <title>Query</title>
+</head>
+
+<body>
+    <h1>Query view</h1>
+    <% filteredData.forEach(function(item) { %>
+        <table>
+            <tr class="sub-header">
+                <td>Name</td>
+                <td>Origin</td>
+                <td>Destination</td>
+                <td>Timestamp</td>
+            </tr>
+                <% item.stream.forEach(function(subItem) { %>
+                    <tr>
+                        <td>
+                            <%= subItem.name %>
+                        </td>
+                        <td>
+                            <%= subItem.origin %>
+                        </td>
+                        <td>
+                            <%= subItem.destination %>
+                        </td>
+                        <td>
+                            <%= subItem.timestamp %>
+                        </td>
+                    </tr>
+                    <% }) %>
+        </table>
+        <% }) %>
+</body>
+
+</html>
