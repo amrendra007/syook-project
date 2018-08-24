@@ -6,7 +6,8 @@ const PersonSchema = new mongoose.Schema({
     trim: true,
   },
   time: {
-    type: String,
+    type: Date,
+    default: Date.now,
   },
   stream: [],
 });
