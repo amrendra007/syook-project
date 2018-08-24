@@ -5,21 +5,21 @@
         "node": true,
         "jquery": true
     },
-    "extends": "airbnb",
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
     "parser": "babel-eslint",
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
+        "import",
+        "prettier"
     ],
     "rules": {
         "no-console": 0,
         "space-before-function-paren": 0,
         "func-names": 0,
-        "indent": [
-            "error",
-            4
-        ],
         "consistent-return": 0,
         "no-unused-vars": [
             1,
@@ -32,6 +32,22 @@
             2,
             "as-needed"
         ],
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "quotes": [
+            2,
+            "single",
+            {
+                "avoidEscape": true,
+                "allowTemplateLiterals": true
+            }
+        ],
+        "prettier/prettier": [
+            "error",
+            {
+                "trailingComma": "es5",
+                "singleQuote": true,
+                "printWidth": 120
+            }
+        ]
     }
 }
